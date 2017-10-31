@@ -1,0 +1,8 @@
+{
+    "name": "all-js-app",
+    "license": "1.0",
+    "dependencies": {
+        "express": "^4.16.2",
+        "vue": "^2.5.2"
+    }
+}
