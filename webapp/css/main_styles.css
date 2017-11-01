@@ -1,0 +1,12 @@
+.main-container {
+    display: flex;
+    flex-direction: row;
+}
+.side-container {
+    flex-grow: 1;
+    background-color: purple;    
+}
+.thread-container {
+    flex-grow: 4;
+}
+

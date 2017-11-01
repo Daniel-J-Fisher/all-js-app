@@ -3,12 +3,24 @@
 <html>
 
 <head>
-    <title>Dan's Example App</title>
+    <title>Slack Clone</title>
+    <script src="/scripts/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="/css/main_styles.css">
 </head>
 
 <body>
-    <div>
-        <h1>Hello To the App<h1/>
+    <div id="main" class="main-container">
+        <div class="side-container">
+            <ul>
+                <li v-for="thread in threads">
+                    {{ thread.thread_name }}
+                </li>
+            </ul>
+        </div>
+        <div class="thread-container">
+            Messages go here...
+        </div>
     </div>
 </body>
 

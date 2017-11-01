@@ -8,12 +8,15 @@ app.get('/api', (req, res) => {
 });
 
 //Serve the webapplication
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.resolve('../webapp/index.html'));    
 });
 
+//function(req, res){};
+
 //Serve the static files
 app.use(express.static(path.resolve('../webapp')));
+app.use('/scripts', express.static(path.resolve('../node_modules')));
 
 app.listen(8080, () => {
     console.log('App listening on port 8080');    
