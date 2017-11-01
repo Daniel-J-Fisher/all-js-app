@@ -8,5 +8,25 @@
 }
 .thread-container {
     flex-grow: 4;
+    display: flex;
+    flex-direction: column;
 }
-
+.thread-messages-container{
+    flex-grow: 4;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.thread-message{
+    display: flex;
+    flex-direction: column;
+}
+.thread-message-title{
+    /* Style for the title */
+}
+.thread-message-text{
+    /* Style for the text of the message */
+}
+.thread-send-message-container{
+    flex-grow: 1;
+}

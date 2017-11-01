@@ -20,12 +20,19 @@
             </ul>
         </div>
         <div class="thread-container">
-            <ul>
-                <li v-for="message in getActiveThread().messages">
-                    {{ message.from }} :
-                    {{ message.text }}
-                </li>
-            </ul>
+            <div class="thread-messages-container">
+                <div class="thread-message" v-for="message in getActiveThread().messages">
+                    <div class="thread-message-title">
+                        <b>{{ message.from }}</b> <i>{{ message.timestamp }}</i>
+                    </div>
+                    <div class="thread-message-text">
+                        {{ message.text }}
+                    </div>
+                </div>
+            </div>
+            <div class="thread-send-message-container">
+                <!-- Here is where we send new messages -->
+            </div>
         </div>
     </div>
 </body>
