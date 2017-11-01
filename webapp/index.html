@@ -5,6 +5,7 @@
 <head>
     <title>Slack Clone</title>
     <script src="/scripts/vue/dist/vue.js"></script>
+    <script src="/scripts/vue-resource/dist/vue-resource.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="/css/main_styles.css">
 </head>
@@ -13,13 +14,18 @@
     <div id="main" class="main-container">
         <div class="side-container">
             <ul>
-                <li v-for="thread in threads">
+                <li v-for="(thread, index) in threads" @click="changeActiveThread(index)">
                     {{ thread.thread_name }}
                 </li>
             </ul>
         </div>
         <div class="thread-container">
-            Messages go here...
+            <ul>
+                <li v-for="message in getActiveThread().messages">
+                    {{ message.from }} :
+                    {{ message.text }}
+                </li>
+            </ul>
         </div>
     </div>
 </body>

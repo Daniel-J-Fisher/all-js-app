@@ -1,49 +1,51 @@
 window.onload = function(){
 
-var main = new Vue({
-    el: '#main',
-    data:{
-        refresh: false,
-        active_thread: 'bob',
-        user_name: 'dan',
-        threads : [
-            {
-                thread_name: 'bob',
-                messages: [
-                    {
-                        from: 'dan',
-                        text: 'hey bob, how\'s it going?\nWhat do you want to talk about?'    
-                    },
-                    {
-                        from: 'bob',
-                        text: 'Dan, hi! We have not talked in a while'
-                    }
-                ]    
-            },
-            {
-                thread_name: 'general',
-                messages: []    
-            },
-            {
-                thread_name: 'random',
-                messages: []    
-            }
-        ]    
-    },
-    methods: {
-        changeActiveThread: function(thread_name){
-            this.active_thread = thread_name;
-            this.refresh = true;   
+    var main = new Vue({
+        el: '#main',
+        data:{
+            active_thread_index: 0,
+            user_name: 'dan',
+            threads : [
+                {
+                    thread_name: 'bob',
+                    messages: [
+                        {
+                            from: 'dan',
+                            timestamp: (new Date()).getTime(),  
+                            text: 'hey bob, how\'s it going? What do you want to talk about?'
+                        },
+                        {
+                            from: 'bob',
+                            text: 'Dan, hi! We have not talked in a while'
+                        }
+                    ]    
+                },
+                {
+                    thread_name: 'general',
+                    messages: []    
+                },
+                {
+                    thread_name: 'random',
+                    messages: []    
+                }
+            ]    
         },
-        getActiveThread: function(){
-            for(var i=0;i<this.threads.legnth;i++){
-                if(this.threads[i].thread_name == this.active_thread){
-                    return this.threads[i];    
-                }    
+        methods: {
+            changeActiveThread: function(thread_index){
+                this.active_thread_index = thread_index
+            },
+            getActiveThread: function(){
+                return this.threads[this.active_thread_index]
             }
-            return {};
+        },
+        created: function(){
+            this.$http.get('/api/getThreadsForUser',{params: {user_name : this.user_name}}).then(response => {
+                //reponse.body will have the threads array
+                console.log(response.body)
+            }, response => {
+                //Error callback
+            })
         }
-    }
-});
+    })
 
 }
