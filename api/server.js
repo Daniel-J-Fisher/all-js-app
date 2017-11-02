@@ -8,7 +8,17 @@ app.get('/api', (req, res) => {
 })
 
 app.get('/api/getThreadsForUser', (req, res) => {
-    res.send('Hello, getting threads')
+    let user = req.query.user;
+    console.log('Getting threads for '+user)
+    getThreadsForUser(user,(threads)=>{
+        res.send(threads)
+    })
+})
+
+app.get('/api/getAllThreads', (req, res) => {
+    getAllThreads((threads)=>{
+        res.send(threads)    
+    })
 })
 
 //Serve the webapplication
@@ -25,4 +35,69 @@ app.listen(8080, () => {
     console.log('App listening on port 8080')
 })
 
+//Define Mongo functions
+let MongoClient = require('mongodb').MongoClient
+let db_url = 'mongodb://localhost:27017/clonedb'
 
+function getThreadsForUser(user,callback){
+    MongoClient.connect(db_url, (err, db) => {
+        db.collection('threads').find({users:user}).toArray((err,result)=>{
+            if(err){throw err}
+            db.close()
+            result = addThreadNames(result)
+            callback(result)
+        })
+    })    
+}
+
+function getAllThreads(callback){
+    MongoClient.connect(db_url, (err, db) => {
+        db.collection('threads').find({}).toArray((err,result)=>{
+            if(err){throw err}
+            db.close()
+            result = addThreadNames(result)
+            callback(result)
+        })   
+    })    
+}
+
+function addNewThread(thread,callback){
+     MongoClient.connect(db_url, (err, db) => {
+        db.collection('threads').insertOne(thread,(err,result)=>{
+            if(err){throw err}
+            db.close()
+            console.log('Thread created')
+            callback(result)
+        })   
+    })    
+}
+
+function addThreadNames(threads){
+    for(var i=0;i<threads.length;i++){
+        let users = threads[i].users
+        let name = users.join(', ')
+        threads[i].name = name
+    }    
+    return threads
+}
+
+function getAllUsers(callback){
+     MongoClient.connect(db_url, (err, db) => {
+        db.collection('users').find({}).toArray((err,result)=>{
+            if(err){throw err}
+            db.close()
+            callback(result)
+        })   
+    })    
+}
+
+function updateThread(thread, callback){
+     MongoClient.connect(db_url, (err, db) => {
+        db.collection('threads').updateOne({users:thread.users},thread, (err,result)=>{
+            if(err){throw err}
+            db.close()
+            console.log('Thread updated')
+            callback(result)
+        })   
+    })    
+}
