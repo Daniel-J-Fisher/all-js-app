@@ -7,16 +7,15 @@ Make sure the [install mongodb](https://docs.mongodb.com/getting-started/shell/t
 
 Below is the code I used on my own system to manually install mongodb binaries
 ```
-cd ~/Downloads
-curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.4.9.tgz
-tar -zxvf mongodb-linux-x86_64-3.4.9.tgz
-mkdir -p ~/Documents/programs/mongodb
-cp -R -n mongodb-linux-x86_64-3.4.9/ ~/Documents/programs/mongodb
-export PATH=/home/dfishe/Documents/programs/mongodb/mongodb-linux-x86_64-3.4.9/bin:$PATH
-sudo mkdir -p /data/db
-sudo chmod 777 /data/db
+sudo apt-get purge mongodb-org*
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+echo "deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+sudo apt-get update
+sudo apt-get install mongodb
+sudo apt-get install -y mongodb-org
 ```
 Then mongo should be started with
 ```
-sudo service mongod start
+mongod
 ```
+This should really be run as a service, but on my box I was not able to get that to work out.

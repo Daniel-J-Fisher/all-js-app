@@ -4,12 +4,8 @@ let db_url = 'mongodb://localhost:27017/clonedb'
 const initial_users = require('./data/users').data
 const initial_threads = require('./data/threads').data
 
-let options = {
-    server : {socketOption : {keepAlive : 1, connectTimeoutMS: 30000}},
-    replset : {socketOption : {keepAlive : 1, connectTimeoutMS: 30000}},
-}
-
-MongoClient.connect(db_url, options, (err, db) => {
+MongoClient.connect(db_url, (err, db) => {
+    db.dropDatabase()
     if(err){throw err}
     console.log('Database created and connected...')
     db.createCollection('users', (err, res) => {
