@@ -31,6 +31,14 @@ window.onload = function(){
                         //Error callback
                     })
                 })
+            },
+            updateThreads: function(){
+                this.$http.get('/api/getThreadsForUser',{params: {user : this.user_name}}).then(response => {
+                    this.threads = response.body
+                    console.log(response.body)
+                }, response => {
+                    //Error callback
+                })  
             }
         },
         created: function(){
@@ -42,5 +50,9 @@ window.onload = function(){
             })
         }
     })
+
+    window.setInterval(()=>{
+         main.updateThreads() 
+    },1000)
 
 }

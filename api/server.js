@@ -74,6 +74,7 @@ function getThreadsForUser(user,callback){
             if(err){throw err}
             db.close()
             result = addThreadNames(result)
+            result = sortMessages(result)
             callback(result)
         })
     })    
@@ -85,6 +86,7 @@ function getAllThreads(callback){
             if(err){throw err}
             db.close()
             result = addThreadNames(result)
+            result = sortMessages(result)
             callback(result)
         })   
     })    
@@ -107,6 +109,15 @@ function addThreadNames(threads){
         let name = users.join(', ')
         threads[i].name = name
     }    
+    return threads
+}
+
+function sortMessages(threads){
+    for(var i=0; i<threads.length;i++){
+        threads[i].messages.sort(function(a,b){
+            return new Date(a.timestamp) - new Date(b.timestamp)
+        })
+    }
     return threads
 }
 
