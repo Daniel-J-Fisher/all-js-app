@@ -5,14 +5,20 @@ window.onload = function(){
         data:{
             active_thread_index: 0,
             user_name: 'dan',
-            threads : []    
+            threads : [],
+            new_message : ''
         },
         methods: {
             changeActiveThread: function(thread_index){
                 this.active_thread_index = thread_index
+                this.new_message = ''
             },
             getActiveThread: function(){
                 return this.threads[this.active_thread_index]
+            },
+            sendMessage: function(){
+                console.log(this.new_message)
+                this.new_message = ''
             }
         },
         created: function(){

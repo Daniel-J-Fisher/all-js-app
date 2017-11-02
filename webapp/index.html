@@ -32,6 +32,12 @@
             </div>
             <div class="thread-send-message-container">
                 <!-- Here is where we send new messages -->
+                <div class="thread-send-message-box">
+                    <input type="text" v-model="new_message" v-on:keyup.enter="sendMessage()" placeholder="Type message...">
+                </div>
+                <div class="thread-send-message-btn">
+                    <button type="button" @click="sendMessage()">Send</button>
+                </div>
             </div>
         </div>
     </div>
