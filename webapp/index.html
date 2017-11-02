@@ -15,7 +15,7 @@
         <div class="side-container">
             <ul>
                 <li v-for="(thread, index) in threads" @click="changeActiveThread(index)">
-                    {{ thread.thread_name }}
+                    {{ thread.name }}
                 </li>
             </ul>
         </div>
@@ -23,7 +23,7 @@
             <div class="thread-messages-container">
                 <div class="thread-message" v-for="message in getActiveThread().messages">
                     <div class="thread-message-title">
-                        <b>{{ message.from }}</b> <i>{{ message.timestamp }}</i>
+                        <b>{{ message.from }}</b> <i>{{ (new Date(message.timestamp)).toISOString() }}</i>
                     </div>
                     <div class="thread-message-text">
                         {{ message.text }}

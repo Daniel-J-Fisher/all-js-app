@@ -5,30 +5,7 @@ window.onload = function(){
         data:{
             active_thread_index: 0,
             user_name: 'dan',
-            threads : [
-                {
-                    thread_name: 'bob',
-                    messages: [
-                        {
-                            from: 'dan',
-                            timestamp: (new Date()).getTime(),  
-                            text: 'hey bob, how\'s it going? What do you want to talk about?'
-                        },
-                        {
-                            from: 'bob',
-                            text: 'Dan, hi! We have not talked in a while'
-                        }
-                    ]    
-                },
-                {
-                    thread_name: 'general',
-                    messages: []    
-                },
-                {
-                    thread_name: 'random',
-                    messages: []    
-                }
-            ]    
+            threads : []    
         },
         methods: {
             changeActiveThread: function(thread_index){
@@ -39,8 +16,9 @@ window.onload = function(){
             }
         },
         created: function(){
-            this.$http.get('/api/getThreadsForUser',{params: {user_name : this.user_name}}).then(response => {
+            this.$http.get('/api/getThreadsForUser',{params: {user : this.user_name}}).then(response => {
                 //reponse.body will have the threads array
+                this.threads = response.body
                 console.log(response.body)
             }, response => {
                 //Error callback
