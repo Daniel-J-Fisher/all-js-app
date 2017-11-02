@@ -18,12 +18,23 @@ window.onload = function(){
             },
             sendMessage: function(){
                 console.log(this.new_message)
-                this.new_message = ''
+                this.$http.put('/api/newMessage',{params: {
+                    user:this.user_name,
+                    users:this.threads[this.active_thread_index].users,
+                    message:this.new_message
+                }}).then(response => {
+                    this.new_message = ''
+                    this.$http.get('/api/getThreadsForUser',{params: {user : this.user_name}}).then(response => {
+                        this.threads = response.body
+                        console.log(response.body)
+                    }, response => {
+                        //Error callback
+                    })
+                })
             }
         },
         created: function(){
             this.$http.get('/api/getThreadsForUser',{params: {user : this.user_name}}).then(response => {
-                //reponse.body will have the threads array
                 this.threads = response.body
                 console.log(response.body)
             }, response => {

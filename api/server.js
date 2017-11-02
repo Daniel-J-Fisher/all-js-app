@@ -8,7 +8,7 @@ app.get('/api', (req, res) => {
 })
 
 app.get('/api/getThreadsForUser', (req, res) => {
-    let user = req.query.user;
+    let user = req.query.user
     console.log('Getting threads for '+user)
     getThreadsForUser(user,(threads)=>{
         res.send(threads)
@@ -18,6 +18,30 @@ app.get('/api/getThreadsForUser', (req, res) => {
 app.get('/api/getAllThreads', (req, res) => {
     getAllThreads((threads)=>{
         res.send(threads)    
+    })
+})
+
+app.put('/api/newMessage', (req, res) => {
+    let user = req.params.user
+    let users = req.params.users
+    let message = req.params.message
+    console.log('New message from '+user+' : '+message)
+    getThreadsForUser(user, (threads)=>{
+        let thread = {}
+        for(var i=0;i<threads.length;i++){
+            if(threads[i].users == users){
+                thread = threads[i]
+                break
+            }
+        }
+        thread.messages.push({
+            from: user,
+            timestamp: (new Date()).getTime(),
+            text: message   
+        })
+        updateThread(thread, (result)=>{
+                res.send(result)
+        })
     })
 })
 
