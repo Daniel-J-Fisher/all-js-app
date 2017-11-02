@@ -1,3 +1,4 @@
+let threads =
 [
     {
         users : ['dan','bot'],
@@ -5,7 +6,7 @@
             {
                 from : 'dan',
                 timestamp : (new Date()).getTime(),
-                text: 'Bot, why are yoy tlaking to me!?'    
+                text: 'Bot, why are yoy tlaking to me!?'
             },
             {
                 from : 'bot',
@@ -30,3 +31,4 @@
         ]
     }
 ]
+module.exports.data = threads
