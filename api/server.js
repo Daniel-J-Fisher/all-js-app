@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 //Set up some API endpoints
 app.get('/api', (req, res) => {
@@ -22,14 +26,15 @@ app.get('/api/getAllThreads', (req, res) => {
 })
 
 app.put('/api/newMessage', (req, res) => {
-    let user = req.params.user
-    let users = req.params.users
-    let message = req.params.message
+    console.log(req.body)
+    let user = req.body.user
+    let id = req.body.id
+    let message = req.body.message
     console.log('New message from '+user+' : '+message)
     getThreadsForUser(user, (threads)=>{
         let thread = {}
         for(var i=0;i<threads.length;i++){
-            if(threads[i].users == users){
+            if(threads[i]._id == id){
                 thread = threads[i]
                 break
             }

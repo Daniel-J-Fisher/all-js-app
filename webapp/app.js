@@ -18,11 +18,11 @@ window.onload = function(){
             },
             sendMessage: function(){
                 console.log(this.new_message)
-                this.$http.put('/api/newMessage',{params: {
+                this.$http.put('/api/newMessage',{
                     user:this.user_name,
-                    users:this.threads[this.active_thread_index].users,
+                    id:this.threads[this.active_thread_index]._id,
                     message:this.new_message
-                }}).then(response => {
+                }).then(response => {
                     this.new_message = ''
                     this.$http.get('/api/getThreadsForUser',{params: {user : this.user_name}}).then(response => {
                         this.threads = response.body
